@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     database_username: str
     secret_key: str
     algorithm: str
+    jwt_expire_seconds: int
 
     class Config:
         env_file = ".env"
