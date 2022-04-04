@@ -2,7 +2,9 @@ from typing import List
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, HTTPException, status, Depends, Response
 
+
 from app.models import User
+from app.config import settings
 from app.database import get_db
 from app.utils import hash, verify
 from app.helpers.jwt_handler import signJWT
@@ -32,7 +34,7 @@ def user_signup(user: UserCreateSchema, db: Session = Depends(get_db)) -> dict:
 
 
 @router.post("/login", response_model=TokenSchema)
-def user_login(user: UserLoginSchema, db: Session = Depends(get_db)) -> dict:
+def user_login(response: Response, user: UserLoginSchema, db: Session = Depends(get_db)) -> dict:
     check_user = db.query(User).filter(
         User.email == user.email).first()
 
@@ -44,7 +46,11 @@ def user_login(user: UserLoginSchema, db: Session = Depends(get_db)) -> dict:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Incorrect password")
 
-    return signJWT(check_user.id)
+    access_token = signJWT(check_user.id, settings.jwt_expire_seconds)
+    response.set_cookie(key="access_token",
+                        value=f"{access_token}", expires=settings.jwt_expire_seconds, httponly=True, secure=True)
+
+    return {"access_token": access_token}
 
 
 @router.get('/get', response_model=List[UserSchema],
