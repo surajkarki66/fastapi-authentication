@@ -13,10 +13,32 @@ OR
 ```bash
   $ pip install pipenv
   $ pipenv --python 3.X
+  $ pipenv shell
   $ pipenv install -r "requirements.txt"
 ```
 
-### Step 2: Run development server
+### Step2: Create .env file in root directory and add following info.
+```
+database_hostname=<database-host>
+database_port=<database-port>
+database_password=<database-password>
+database_name=<database-name>
+database_username=<database-username>
+secret_key=<jwt-secretkey>
+algorithm=<algorithm>
+jwt_expire_seconds=<jwt-expire>
+
+```
+
+
+### Step3: Create a database with suitable name in Postgresql
+
+### Step4: Run database migration
+```bash
+  $ alembic upgrade heads
+```
+
+### Step 5: Run development server
 
 ```bash
   $ uvicorn app.main:app --reload
