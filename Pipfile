@@ -24,7 +24,7 @@ typing-extensions = "==4.1.1"
 uvicorn = "==0.15.0"
 Mako = "==1.1.6"
 MarkupSafe = "==2.1.0"
-PyJWT = "==1.7.1"
+PyJWT = "==2.4.0"
 SQLAlchemy = "==1.4.32"
 
 [dev-packages]
