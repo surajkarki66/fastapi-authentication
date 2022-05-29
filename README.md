@@ -16,8 +16,8 @@ OR
   $ pipenv shell
   $ pipenv install -r "requirements.txt"
 ```
-
-### Step2: Create .env file in root directory and add following info.
+### Step2: Install Postgresql locally
+### Step3: Create .env file in root directory and add following info.
 ```
 database_hostname=<database-host>
 database_port=<database-port>
@@ -31,14 +31,14 @@ jwt_expire_seconds=<jwt-expire>
 ```
 
 
-### Step3: Create a database with suitable name in Postgresql
+### Step4: Create a database with suitable name in Postgresql
 
-### Step4: Run database migration
+### Step5: Run database migration
 ```bash
   $ alembic upgrade heads
 ```
 
-### Step 5: Run development server
+### Step 6: Run development server
 
 ```bash
   $ uvicorn app.main:app --reload
